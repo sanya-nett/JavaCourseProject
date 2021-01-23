@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.8.1'
 }
 
 group 'ru.ascherba'
@@ -9,6 +10,30 @@ repositories {
     mavenCentral()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+allure {
+    version = findProperty('version.allure')
+    autoconfigure = true
+    useJUnit5 {
+        version = findProperty('version.allure')
+    }
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'com.codeborne', name: 'selenide', version: findProperty('version.selenide')
+    compile group: 'io.qameta.allure', name: 'allure-selenide', version: findProperty('version.allure')
+    compile group: 'org.aeonbits.owner', name: 'owner', version: findProperty('version.owner')
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter', version: findProperty('version.junit')
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
 }
