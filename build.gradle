@@ -31,7 +31,8 @@ dependencies {
     compile group: 'com.codeborne', name: 'selenide', version: findProperty('version.selenide')
     compile group: 'io.qameta.allure', name: 'allure-selenide', version: findProperty('version.allure')
     compile group: 'org.aeonbits.owner', name: 'owner', version: findProperty('version.owner')
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter', version: findProperty('version.junit')
+    compile group: 'org.junit.jupiter', name: 'junit-jupiter', version: findProperty('version.junit')
+    compile group: 'org.assertj', name: 'assertj-core', version: findProperty('version.assertj')
 }
 
 tasks.withType(Test) {
