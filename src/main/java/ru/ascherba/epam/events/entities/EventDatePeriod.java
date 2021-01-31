@@ -35,7 +35,7 @@ public class EventDatePeriod {
         List<String> dateStringList = Arrays.asList(eventDate.split(" - "));
         if (dateStringList.size() == 2) {
             endDate = parseFullEventDate(dateStringList.get(1));
-            startDate = parseShortEventDate(dateStringList.get(0), endDate.getYear());
+            startDate = parseShortEventDate(dateStringList.get(0), endDate);
         } else if (dateStringList.size() == 1){
             startDate = parseFullEventDate(dateStringList.get(0));
             endDate = startDate;
@@ -55,19 +55,30 @@ public class EventDatePeriod {
 
     /**
      * Parse short event date
-     * @param dateString date string
-     * @param year default year
+     *
+     * @param dateString  date string
+     * @param defaultDate default date
      * @return date object
      */
-    private LocalDate parseShortEventDate(String dateString, int year) {
-        return parseShortDate("d MMM", dateString, year);
+    private LocalDate parseShortEventDate(String dateString, LocalDate defaultDate) {
+        return parseShortDate("d MMM", dateString, defaultDate);
     }
 
     /**
      * Check that current event date period on this week
+     *
      * @return boolean value
      */
     public boolean isAvailableForThisWeek() {
         return dateOnThisWeek(startDate) || dateOnThisWeek(endDate);
+    }
+
+    /**
+     * Check that current event date period in the past
+     *
+     * @return boolean value
+     */
+    public boolean isPassed() {
+        return dateInPast(endDate);
     }
 }

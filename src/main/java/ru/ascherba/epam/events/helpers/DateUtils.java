@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 
@@ -52,6 +53,7 @@ public class DateUtils {
     /**
      * Checks that the date is on the current week
      * Сheck includes week boundaries [Start day of Week: End day of Week]
+     *
      * @param date verifiable date
      * @return true if date inside current week
      */
@@ -60,11 +62,22 @@ public class DateUtils {
     }
 
     /**
+     * Checks that the date in the past
+     *
+     * @param date verifiable date
+     * @return true if date less then today
+     */
+    public static boolean dateInPast(LocalDate date) {
+        return date.compareTo(LocalDate.now()) < 0;
+    }
+
+    /**
      * Parse full date by passed datetime format
      * Date can be any (For example: '2 Dec 2021')
      * Date format can be any (For example: 'dd MMM yyyy')
+     *
      * @param dateTimeFormat string template using for parse
-     * @param dateString string that need to parse
+     * @param dateString     string that need to parse
      * @return date object
      */
     public static LocalDate parseFullDate(String dateTimeFormat, String dateString) {
@@ -75,15 +88,20 @@ public class DateUtils {
      * Parse short date by passed datetime format
      * Date can be any (For example: '2 Dec')
      * Date format can be any (For example: 'dd MMM')
+     *
      * @param dateTimeFormat string template using for parse
-     * @param dateString string that need to parse
-     * @param year default year (need to create date object)
+     * @param dateString     string that need to parse
+     * @param defaultDate    default date (need to create date object)
      * @return date object
      */
-    public static LocalDate parseShortDate(String dateTimeFormat, String dateString, int year) {
+    public static LocalDate parseShortDate(String dateTimeFormat, String dateString, LocalDate defaultDate) {
         DateTimeFormatter formatter = createDateFormatter(dateTimeFormat);
-        TemporalAccessor parsed = formatter.parse(dateString);
-        MonthDay md = MonthDay.from(parsed);
-        return LocalDate.of(year, md.getMonth(), md.getDayOfMonth());
+        try {
+            TemporalAccessor parsed = formatter.parse(dateString);
+            MonthDay md = MonthDay.from(parsed);
+            return LocalDate.of(defaultDate.getYear(), md.getMonth(), md.getDayOfMonth());
+        } catch (DateTimeParseException ex) {
+            return LocalDate.of(defaultDate.getYear(), defaultDate.getMonthValue(), Integer.parseInt(dateString));
+        }
     }
 }
