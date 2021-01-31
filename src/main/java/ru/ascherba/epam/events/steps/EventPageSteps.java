@@ -28,6 +28,18 @@ public class EventPageSteps {
         eventPage.getUpcomingEventsTab().click();
     }
 
+    @Step("Пользователь нажимает на Past Events")
+    public void userClickOnPastEvents() {
+        eventPage.getPastEventsTab().click();
+    }
+
+    @Step("Пользователь нажимает на Location в блоке фильтров и выбирает {country} в выпадающем списке")
+    public void userSelectCountryFromLocationFilter(String country) {
+        eventPage.eventFilterPanel.clickOnLocationFilter();
+        eventPage.eventFilterPanel.selectCountryFromLocationFilter(country);
+        eventPage.eventFilterPanel.clickOnLocationFilter();
+    }
+
     @Step("На странице отображаются карточки предстоящих мероприятий")
     public void eventCardsPresentedOnPage() {
         assertFalse(eventPage.getAllEventCards().isEmpty());
@@ -38,11 +50,23 @@ public class EventPageSteps {
         assertEquals(eventPage.getUpcomingEventsCounterValue(), eventPage.getAllEventCards().size());
     }
 
+    @Step("Количество карточек равно счетчику на кнопке Past Events")
+    public void eventCardNumberEqualToPastEventCounter() {
+        assertEquals(eventPage.getPastEventsCounterValue(), eventPage.getAllEventCards().size());
+    }
+
     @Step("В блоке 'This week' даты проведения мероприятий больше или равны текущей дате " +
             "и находятся в пределах текущей недели")
     public void weekEventDatesInCurrentWeekRange() {
         for (EventCard event : eventPage.getWeekEventCards()) {
             assertTrue(event.getEventPeriod().isAvailableForThisWeek());
+        }
+    }
+
+    @Step("Даты проведенных мероприятий меньше текущей даты")
+    public void allEventDatesLessThenDate() {
+        for (EventCard event : eventPage.getAllEventCards()) {
+            assertTrue(event.getEventPeriod().isPassed());
         }
     }
 }
