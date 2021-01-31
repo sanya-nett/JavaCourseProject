@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NotFoundException;
 import ru.ascherba.epam.events.containers.EventCard;
+import ru.ascherba.epam.events.elements.EventFilterPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class EventPage {
     SelenideElement pastEventsTab = $(byText("Past Events")).closest(".evnt-tab-item");
     ElementsCollection allEventCards = $$(".evnt-cards-container .evnt-card-wrapper");
     ElementsCollection weekEventCards = $$x("//h3[text()='This Week']/..//div[contains(@class, 'evnt-event-card')]");
+
+    public EventFilterPanel eventFilterPanel = new EventFilterPanel();
 
     public SelenideElement getUpcomingEventsTab() {
         return upcomingEventsTab;
