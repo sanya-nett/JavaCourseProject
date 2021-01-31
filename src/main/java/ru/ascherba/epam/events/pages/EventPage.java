@@ -18,7 +18,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class EventPage {
 
     SelenideElement upcomingEventsTab = $(byText("Upcoming events")).closest(".evnt-tab-item");
-    SelenideElement pastEventsTab = $(byText("Past events")).closest(".evnt-tab-item");
+    SelenideElement pastEventsTab = $(byText("Past Events")).closest(".evnt-tab-item");
     ElementsCollection allEventCards = $$(".evnt-cards-container .evnt-card-wrapper");
     ElementsCollection weekEventCards = $$x("//h3[text()='This Week']/..//div[contains(@class, 'evnt-event-card')]");
 
