@@ -28,11 +28,17 @@ allure {
 }
 
 dependencies {
+    // Selenide + Allure
     compile group: 'com.codeborne', name: 'selenide', version: findProperty('version.selenide')
     compile group: 'io.qameta.allure', name: 'allure-selenide', version: findProperty('version.allure')
-    compile group: 'org.aeonbits.owner', name: 'owner', version: findProperty('version.owner')
-    compile group: 'org.junit.jupiter', name: 'junit-jupiter', version: findProperty('version.junit')
+    // AssertJ + Allure
     compile group: 'org.assertj', name: 'assertj-core', version: findProperty('version.assertj')
+    compile group: 'io.qameta.allure', name: 'allure-assertj', version: findProperty('version.allure')
+    // Test frameworks
+    compile group: 'org.junit.jupiter', name: 'junit-jupiter', version: findProperty('version.junit')
+    compile group: 'io.rest-assured', name: 'rest-assured', version: findProperty('version.rest-assured')
+    // Configuration tools
+    compile group: 'org.aeonbits.owner', name: 'owner', version: findProperty('version.owner')
     testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: findProperty('version.slf4j')
 }
 
