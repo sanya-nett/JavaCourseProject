@@ -21,7 +21,7 @@ public class VideoPageSteps {
     MainPage mainPage;
     VideoPage videoPage;
 
-    @Step("Пользователь переходит на вкладку video")
+    @Step("Пользователь переходит на вкладку Video")
     public void userMoveToVideoTab() {
         mainPage = open("/", MainPage.class);
         mainPage.platformHeader.clickOnVideoTab();
