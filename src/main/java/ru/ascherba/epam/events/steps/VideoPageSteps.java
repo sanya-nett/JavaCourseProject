@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by aleksandr.scherba on 31.01.2021
@@ -62,7 +61,7 @@ public class VideoPageSteps {
     @Step("На странице отображаются доклады, содержащие в названии ключевое слово поиска '{keyword}'")
     public void eventTalkCardsContainSubstring(String keyword) {
         for (EventTalkCard eventTalk : videoPage.getEventTalkCards()) {
-            assertTrue(eventTalk.getEventFullName().contains(keyword));
+            assertThat(eventTalk.getEventFullName()).contains(keyword);
         }
     }
 
