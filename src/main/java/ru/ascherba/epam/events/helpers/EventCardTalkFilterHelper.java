@@ -2,11 +2,6 @@ package ru.ascherba.epam.events.helpers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.restassured.RestAssured;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
 import ru.ascherba.epam.events.entities.talks.EventTalkFilterCategory;
 import ru.ascherba.epam.events.entities.talks.EventTalkFilterItem;
@@ -22,16 +17,10 @@ import static io.restassured.RestAssured.given;
 /**
  * Created by aleksandr.scherba on 01.02.2021
  */
-public class EventCardTalkFilterHelper {
+public class EventCardTalkFilterHelper extends EventBaseHelper {
 
     public EventCardTalkFilterHelper() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-        // FIXME: need use a common configuration class
-        RestAssured.baseURI = "https://events.epam.com";
-        RestAssured.responseSpecification = new ResponseSpecBuilder()
-                .expectStatusCode(200)
-                .expectContentType(ContentType.JSON)
-                .build();
+        super();
     }
 
     /**
