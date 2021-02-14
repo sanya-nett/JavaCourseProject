@@ -2,6 +2,7 @@ package ru.ascherba.epam.events.ui.scenario;
 
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.ascherba.epam.events.entities.EventFilterQueryParams;
@@ -23,6 +24,7 @@ public class TestVideoPresentations extends BaseTest {
 
     VideoPageSteps videoSteps = new VideoPageSteps();
 
+    @Step("Получить список отфильтрованных карточек с помощью API")
     public List<EventTalkResponseCard> getEventTalks() {
         EventCardTalkFilterHelper eventHelper = new EventCardTalkFilterHelper();
         EventFilterQueryParams eventQueryBuilder = new EventFilterQueryParams(eventHelper.getAllFilters());
