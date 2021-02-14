@@ -33,7 +33,7 @@ public class Event {
     @SerializedName("branding")
     public Object branding;
     @SerializedName("event_status")
-    public Object eventStatus;
+    public EventStatus eventStatus;
     @SerializedName("speakers")
     public Speakers speakers;
     @SerializedName("in_calendar")
