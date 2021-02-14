@@ -12,10 +12,16 @@ public class EventPlatformHeader {
 
     SelenideElement header = $(".evnt-platform-header");
     SelenideElement eventTab = header.$("a[href='/events']");
+    SelenideElement videoTab = header.$("a[href^='/video']");
 
     @Step("Click on 'Events' tab from header")
     public void clickOnEventTab() {
         eventTab.click();
+    }
+
+    @Step("Click on 'Video' tab from header")
+    public void clickOnVideoTab() {
+        videoTab.click();
     }
 
 }
