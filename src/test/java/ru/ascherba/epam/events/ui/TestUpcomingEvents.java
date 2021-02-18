@@ -33,7 +33,8 @@ public class TestUpcomingEvents extends BaseTest {
         eventSteps.userMoveToEventsTab();
         eventSteps.userClickOnUpcomingEvents();
         eventSteps.eventCardsPresentedOnPage();
-        assumeTrue(new EventCardHelper().haveThisWeekEvents());
+        assumeTrue(new EventCardHelper().haveThisWeekEvents(),
+                "There are no events for this week");
         eventSteps.weekEventDatesInCurrentWeekRange();
     }
 }
