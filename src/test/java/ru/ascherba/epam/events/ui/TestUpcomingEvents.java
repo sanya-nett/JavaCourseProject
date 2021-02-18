@@ -1,4 +1,4 @@
-package ru.ascherba.epam.events.ui.scenario;
+package ru.ascherba.epam.events.ui;
 
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;

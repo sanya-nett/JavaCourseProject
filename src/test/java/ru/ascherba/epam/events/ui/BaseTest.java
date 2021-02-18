@@ -1,4 +1,4 @@
-package ru.ascherba.epam.events.ui.scenario;
+package ru.ascherba.epam.events.ui;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
