@@ -13,7 +13,6 @@ import java.util.Random;
 
 import static com.codeborne.selenide.WebDriverRunner.url;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by aleksandr.scherba on 23.01.2021
@@ -60,7 +59,7 @@ public class EventPageSteps extends BasePageSteps {
 
     @Step("На странице отображаются карточки предстоящих мероприятий")
     public void eventCardsPresentedOnPage() {
-        assertFalse(eventPage.getAllEventCards().isEmpty());
+        assertThat(eventPage.getAllEventCards()).isNotEmpty();
     }
 
     @Step("Происходит переход на страницу с подробной информацией о мероприятии")
@@ -70,26 +69,29 @@ public class EventPageSteps extends BasePageSteps {
 
     @Step("Количество карточек равно счетчику на кнопке Upcoming Events")
     public void eventCardNumberEqualToUpcomingEventCounter() {
-        assertEquals(eventPage.getUpcomingEventsCounterValue(), eventPage.getAllEventCards().size());
+        assertThat(eventPage.getAllEventCards())
+                .hasSize(eventPage.getUpcomingEventsCounterValue());
     }
 
     @Step("Количество карточек равно счетчику на кнопке Past Events")
     public void eventCardNumberEqualToPastEventCounter() {
-        assertEquals(eventPage.getPastEventsCounterValue(), eventPage.getAllEventCards().size());
+        assertThat(eventPage.getAllEventCards())
+                .hasSize(eventPage.getPastEventsCounterValue());
     }
 
     @Step("В блоке 'This week' даты проведения мероприятий больше или равны текущей дате " +
             "и находятся в пределах текущей недели")
     public void weekEventDatesInCurrentWeekRange() {
         for (EventCard event : eventPage.getWeekEventCards()) {
-            assertTrue(event.getEventPeriod().isAvailableForThisWeek());
+            assertThat(event.getEventPeriod().isAvailableForThisWeek()).isTrue();
+
         }
     }
 
     @Step("Даты проведенных мероприятий меньше текущей даты")
     public void allEventDatesLessThenDate() {
         for (EventCard event : eventPage.getAllEventCards()) {
-            assertTrue(event.getEventPeriod().isPassed());
+            assertThat(event.getEventPeriod().isPassed()).isTrue();
         }
     }
 
