@@ -6,7 +6,7 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.ascherba.epam.events.entities.events.Event;
-import ru.ascherba.epam.events.helpers.EventCardHelper;
+import ru.ascherba.epam.events.helpers.api.EventCardHelper;
 import ru.ascherba.epam.events.steps.EventPageSteps;
 
 import java.util.List;

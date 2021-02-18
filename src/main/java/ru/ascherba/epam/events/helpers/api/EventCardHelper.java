@@ -1,4 +1,4 @@
-package ru.ascherba.epam.events.helpers;
+package ru.ascherba.epam.events.helpers.api;
 
 import io.restassured.mapper.ObjectMapperType;
 import ru.ascherba.epam.events.entities.events.Event;

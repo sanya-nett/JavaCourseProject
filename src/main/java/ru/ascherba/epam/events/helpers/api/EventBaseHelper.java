@@ -1,4 +1,4 @@
-package ru.ascherba.epam.events.helpers;
+package ru.ascherba.epam.events.helpers.api;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
