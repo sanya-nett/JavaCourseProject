@@ -9,20 +9,19 @@ import ru.ascherba.epam.events.pages.VideoPage;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Selenide.open;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by aleksandr.scherba on 31.01.2021
  */
-public class VideoPageSteps {
+public class VideoPageSteps extends BasePageSteps {
 
     MainPage mainPage;
     VideoPage videoPage;
 
     @Step("Пользователь переходит на вкладку Video")
     public void userMoveToVideoTab() {
-        mainPage = open("/", MainPage.class);
+        mainPage = openMainPage();
         mainPage.platformHeader.clickOnVideoTab();
         videoPage = new VideoPage();
     }

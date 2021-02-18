@@ -11,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Created by aleksandr.scherba on 23.01.2021
  */
-public class EventPageSteps {
+public class EventPageSteps extends BasePageSteps {
 
     MainPage mainPage;
     EventPage eventPage;
 
     @Step("Пользователь переходит на вкладку events")
     public void userMoveToEventsTab() {
-        mainPage = open("/", MainPage.class);
+        mainPage = openMainPage();
         mainPage.platformHeader.clickOnEventTab();
         eventPage = new EventPage();
     }
