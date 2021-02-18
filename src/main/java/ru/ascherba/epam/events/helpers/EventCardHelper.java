@@ -1,7 +1,11 @@
 package ru.ascherba.epam.events.helpers;
 
 import io.restassured.mapper.ObjectMapperType;
+import ru.ascherba.epam.events.entities.events.Event;
 import ru.ascherba.epam.events.entities.events.EventResponse;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 
@@ -38,6 +42,25 @@ public class EventCardHelper extends EventBaseHelper {
      */
     public EventResponse getUpcomingResponse() {
         return getEventResponse("upcoming");
+    }
+
+    /**
+     * Get event by name from upcoming events
+     *
+     * @param eventTitle expected event name for search
+     * @return event instance
+     */
+    public Event getUpcomingEvent(String eventTitle) {
+        Optional<Event> event = getUpcomingResponse()
+                .events
+                .stream()
+                .filter(e -> e.title.equals(eventTitle))
+                .findFirst();
+        if (!event.isPresent()) {
+            throw new NoSuchElementException(
+                    String.format("Not found event with name: %s", eventTitle));
+        }
+        return event.get();
     }
 
     /**
