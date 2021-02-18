@@ -1,5 +1,6 @@
 package ru.ascherba.epam.events.helpers;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -12,7 +13,11 @@ import io.restassured.http.ContentType;
 public class EventBaseHelper {
 
     public EventBaseHelper() {
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+        RestAssured.filters(
+                new RequestLoggingFilter(),
+                new ResponseLoggingFilter(),
+                new AllureRestAssured()
+        );
         // FIXME: need use a common configuration class
         RestAssured.baseURI = "https://events.epam.com";
         RestAssured.responseSpecification = new ResponseSpecBuilder()
