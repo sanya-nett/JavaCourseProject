@@ -32,7 +32,7 @@ public class EventDatePeriod {
     }
 
     public EventDatePeriod(String eventDate) {
-        List<String> dateStringList = Arrays.asList(eventDate.split(" - "));
+        List<String> dateStringList = Arrays.asList(eventDate.trim().split(" - "));
         if (dateStringList.size() == 2) {
             endDate = parseFullEventDate(dateStringList.get(1));
             startDate = parseShortEventDate(dateStringList.get(0), endDate);

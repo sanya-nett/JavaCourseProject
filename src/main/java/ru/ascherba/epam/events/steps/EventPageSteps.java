@@ -2,23 +2,30 @@ package ru.ascherba.epam.events.steps;
 
 import io.qameta.allure.Step;
 import ru.ascherba.epam.events.containers.EventCard;
+import ru.ascherba.epam.events.entities.EventDatePeriod;
+import ru.ascherba.epam.events.entities.events.Event;
 import ru.ascherba.epam.events.pages.EventPage;
 import ru.ascherba.epam.events.pages.MainPage;
 
-import static com.codeborne.selenide.Selenide.open;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
+import static com.codeborne.selenide.WebDriverRunner.url;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by aleksandr.scherba on 23.01.2021
  */
-public class EventPageSteps {
+public class EventPageSteps extends BasePageSteps {
 
     MainPage mainPage;
     EventPage eventPage;
 
     @Step("Пользователь переходит на вкладку events")
     public void userMoveToEventsTab() {
-        mainPage = open("/", MainPage.class);
+        mainPage = openMainPage();
         mainPage.platformHeader.clickOnEventTab();
         eventPage = new EventPage();
     }
@@ -40,9 +47,25 @@ public class EventPageSteps {
         eventPage.eventFilterPanel.clickOnLocationFilter();
     }
 
+    @Step("Пользователь нажимает на любую карточку")
+    public String userClickOnRandomCard() {
+        Random random = new Random();
+        List<EventCard> eventCardList = eventPage.getAllEventCards();
+        EventCard eventCard = eventCardList
+                .get(random.nextInt(eventCardList.size()));
+        String eventName = eventCard.getEventName();
+        eventCard.clickOnCard();
+        return eventName;
+    }
+
     @Step("На странице отображаются карточки предстоящих мероприятий")
     public void eventCardsPresentedOnPage() {
         assertFalse(eventPage.getAllEventCards().isEmpty());
+    }
+
+    @Step("Происходит переход на страницу с подробной информацией о мероприятии")
+    public void openEventCardDetailPage(Event responseEvent) {
+        assertThat(url()).endsWith("/" + responseEvent.url);
     }
 
     @Step("Количество карточек равно счетчику на кнопке Upcoming Events")
@@ -67,6 +90,58 @@ public class EventPageSteps {
     public void allEventDatesLessThenDate() {
         for (EventCard event : eventPage.getAllEventCards()) {
             assertTrue(event.getEventPeriod().isPassed());
+        }
+    }
+
+    @Step("Найти информацию о '{eventTitle}' мероприятии из API")
+    private Event searchEventFromResponse(String eventTitle, List<Event> responseEvents) {
+        Optional<Event> eventResult = responseEvents
+                .stream()
+                .filter(event -> event.title.equals(eventTitle))
+                .findFirst();
+        assertThat(eventResult.isPresent()).isTrue();
+        return eventResult.get();
+    }
+
+    @Step("В карточке указана информация о месте проведения")
+    private void eventCardLocationEqualToResponseCard(EventCard card, Event event) {
+        assertThat(card.getEventLanguage()).isEqualTo(event.language);
+    }
+
+    @Step("В карточке указана информация о дате проведения")
+    private void eventCardDateEqualToResponseCard(EventCard card, Event event) {
+        EventDatePeriod expectedPeriod = new EventDatePeriod(event.dates);
+        EventDatePeriod actualPeriod = card.getEventPeriod();
+        assertThat(actualPeriod.getStartDate()).isEqualTo(expectedPeriod.getStartDate());
+        assertThat(actualPeriod.getEndDate()).isEqualTo(expectedPeriod.getEndDate());
+    }
+
+    @Step("В карточке указана информация о регистрации")
+    private void eventCardRegStatusEqualToResponseCard(EventCard card, Event event) {
+        if (event.eventStatus != null) {
+            assertThat(card.getEventRegisterStatus()).isEqualTo(event.eventStatus.text);
+        } else {
+            card.checkThatEventRegisterStatusIsNotVisible();
+        }
+    }
+
+    @Step("В карточке указана информация о спикерах")
+    private void eventCardSpeakersEqualToResponseCard(EventCard card, Event event) {
+        if (event.speakers.count.equals(0)) {
+            card.checkThatEventSpeakersUnknown();
+        } else {
+            assertThat(card.getEventSpeakerCount()).isEqualTo(event.speakers.count);
+        }
+    }
+
+    @Step("В карточках указана информация о мероприятии")
+    public void eventCardsEqualToResponseCards(List<Event> responseEvents) {
+        for (EventCard eventCard : eventPage.getAllEventCards()) {
+            Event eventResponse = searchEventFromResponse(eventCard.getEventName(), responseEvents);
+            eventCardLocationEqualToResponseCard(eventCard, eventResponse);
+            eventCardDateEqualToResponseCard(eventCard, eventResponse);
+            eventCardRegStatusEqualToResponseCard(eventCard, eventResponse);
+            eventCardSpeakersEqualToResponseCard(eventCard, eventResponse);
         }
     }
 }
