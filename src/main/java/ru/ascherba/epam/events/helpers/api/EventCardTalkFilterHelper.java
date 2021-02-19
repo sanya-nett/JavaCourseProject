@@ -10,8 +10,8 @@ import ru.ascherba.epam.events.entities.talks.EventTalkResponseCard;
 import ru.ascherba.epam.events.helpers.EventFilterItemsJsonDeserializer;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -45,7 +45,7 @@ public class EventCardTalkFilterHelper extends EventBaseHelper {
      * @param queryParameters parameters for select cards
      * @return event talk card objects
      */
-    public List<EventTalkResponseCard> getEventTalks(HashMap<String, Object> queryParameters) {
+    public List<EventTalkResponseCard> getEventTalks(Map<String, Object> queryParameters) {
         return given()
                 .queryParams(queryParameters)
                 .get("/api/v2/talks.json")

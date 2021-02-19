@@ -4,6 +4,7 @@ import ru.ascherba.epam.events.entities.talks.EventTalkFilterCategory;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by aleksandr.scherba on 07.02.2021
@@ -39,7 +40,7 @@ public class EventFilterQueryParams {
      *
      * @return query parameters
      */
-    public HashMap<String, Object> collect() {
+    public Map<String, Object> collect() {
         return queryParameters;
     }
 }

@@ -10,8 +10,8 @@ import ru.ascherba.epam.events.entities.talks.EventTalkResponseCard;
 import ru.ascherba.epam.events.helpers.api.EventCardTalkFilterHelper;
 import ru.ascherba.epam.events.steps.VideoPageSteps;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.qameta.allure.Allure.step;
 
@@ -28,7 +28,7 @@ public class TestVideoPresentations extends BaseTest {
     public List<EventTalkResponseCard> getEventTalks() {
         EventCardTalkFilterHelper eventHelper = new EventCardTalkFilterHelper();
         EventFilterQueryParams eventQueryBuilder = new EventFilterQueryParams(eventHelper.getAllFilters());
-        HashMap<String, Object> queryParams = eventQueryBuilder
+        Map<String, Object> queryParams = eventQueryBuilder
                 .addParams("Media", "Video")
                 .addParams("Category", "Testing")
                 .addParams("Location", "Belarus")
