@@ -59,23 +59,29 @@ public class EventPageSteps extends BasePageSteps {
 
     @Step("На странице отображаются карточки предстоящих мероприятий")
     public void eventCardsPresentedOnPage() {
-        assertThat(eventPage.getAllEventCards()).isNotEmpty();
+        assertThat(eventPage.getAllEventCards())
+                .withFailMessage("Event cards are not displayed on the page")
+                .isNotEmpty();
     }
 
     @Step("Происходит переход на страницу с подробной информацией о мероприятии")
     public void openEventCardDetailPage(Event responseEvent) {
-        assertThat(url()).endsWith("/" + responseEvent.url);
+        assertThat(url())
+                .withFailMessage("URL path doesn't not end with value from api response")
+                .endsWith("/" + responseEvent.url);
     }
 
     @Step("Количество карточек равно счетчику на кнопке Upcoming Events")
     public void eventCardNumberEqualToUpcomingEventCounter() {
         assertThat(eventPage.getAllEventCards())
+                .withFailMessage("The number of cards does not match the value in the counter")
                 .hasSize(eventPage.getUpcomingEventsCounterValue());
     }
 
     @Step("Количество карточек равно счетчику на кнопке Past Events")
     public void eventCardNumberEqualToPastEventCounter() {
         assertThat(eventPage.getAllEventCards())
+                .withFailMessage("The number of cards does not match the value in the counter")
                 .hasSize(eventPage.getPastEventsCounterValue());
     }
 
@@ -83,15 +89,18 @@ public class EventPageSteps extends BasePageSteps {
             "и находятся в пределах текущей недели")
     public void weekEventDatesInCurrentWeekRange() {
         for (EventCard event : eventPage.getWeekEventCards()) {
-            assertThat(event.getEventPeriod().isAvailableForThisWeek()).isTrue();
-
+            assertThat(event.getEventPeriod().isAvailableForThisWeek())
+                    .withFailMessage(event.getEventName() + " doesn't available on this week")
+                    .isTrue();
         }
     }
 
     @Step("Даты проведенных мероприятий меньше текущей даты")
     public void allEventDatesLessThenDate() {
         for (EventCard event : eventPage.getAllEventCards()) {
-            assertThat(event.getEventPeriod().isPassed()).isTrue();
+            assertThat(event.getEventPeriod().isPassed())
+                    .withFailMessage(event.getEventName() + " doesn't passed")
+                    .isTrue();
         }
     }
 
@@ -101,27 +110,37 @@ public class EventPageSteps extends BasePageSteps {
                 .stream()
                 .filter(event -> event.title.equals(eventTitle))
                 .findFirst();
-        assertThat(eventResult.isPresent()).isTrue();
+        assertThat(eventResult.isPresent())
+                .withFailMessage(eventTitle + " event not found")
+                .isTrue();
         return eventResult.get();
     }
 
     @Step("В карточке указана информация о месте проведения")
     private void eventCardLocationEqualToResponseCard(EventCard card, Event event) {
-        assertThat(card.getEventLanguage()).isEqualTo(event.language);
+        assertThat(card.getEventLanguage())
+                .withFailMessage("Event card's language isn't equal from api response")
+                .isEqualTo(event.language);
     }
 
     @Step("В карточке указана информация о дате проведения")
     private void eventCardDateEqualToResponseCard(EventCard card, Event event) {
         EventDatePeriod expectedPeriod = new EventDatePeriod(event.dates);
         EventDatePeriod actualPeriod = card.getEventPeriod();
-        assertThat(actualPeriod.getStartDate()).isEqualTo(expectedPeriod.getStartDate());
-        assertThat(actualPeriod.getEndDate()).isEqualTo(expectedPeriod.getEndDate());
+        assertThat(actualPeriod.getStartDate())
+                .withFailMessage("Event card's start date isn't equal from api response")
+                .isEqualTo(expectedPeriod.getStartDate());
+        assertThat(actualPeriod.getEndDate())
+                .withFailMessage("Event card's end date isn't equal from api response")
+                .isEqualTo(expectedPeriod.getEndDate());
     }
 
     @Step("В карточке указана информация о регистрации")
     private void eventCardRegStatusEqualToResponseCard(EventCard card, Event event) {
         if (event.eventStatus != null) {
-            assertThat(card.getEventRegisterStatus()).isEqualTo(event.eventStatus.text);
+            assertThat(card.getEventRegisterStatus())
+                    .withFailMessage("Event card's register status isn't equal from api response")
+                    .isEqualTo(event.eventStatus.text);
         } else {
             card.checkThatEventRegisterStatusIsNotVisible();
         }
@@ -132,7 +151,9 @@ public class EventPageSteps extends BasePageSteps {
         if (event.speakers.count.equals(0)) {
             card.checkThatEventSpeakersUnknown();
         } else {
-            assertThat(card.getEventSpeakerCount()).isEqualTo(event.speakers.count);
+            assertThat(card.getEventSpeakerCount())
+                    .withFailMessage("Event card's speaker count isn't equal from api response")
+                    .isEqualTo(event.speakers.count);
         }
     }
 

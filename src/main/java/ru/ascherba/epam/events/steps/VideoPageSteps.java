@@ -60,13 +60,16 @@ public class VideoPageSteps extends BasePageSteps {
     @Step("На странице отображаются доклады, содержащие в названии ключевое слово поиска '{keyword}'")
     public void eventTalkCardsContainSubstring(String keyword) {
         for (EventTalkCard eventTalk : videoPage.getEventTalkCards()) {
-            assertThat(eventTalk.getEventFullName()).contains(keyword);
+            assertThat(eventTalk.getEventFullName())
+                    .withFailMessage("Event title doesn't contains keyword")
+                    .contains(keyword);
         }
     }
 
     @Step("Количество карточек с ответом из API")
     public void eventTalkCardsCountEqualResponseCards(List<EventTalkResponseCard> eventResponseCards) {
         assertThat(videoPage.getEventTalkCards().size())
+                .withFailMessage("Event card count isn't equal from api response")
                 .isEqualTo(eventResponseCards.size());
     }
 
@@ -80,7 +83,9 @@ public class VideoPageSteps extends BasePageSteps {
                 .stream()
                 .map(EventTalkCard::getEventFullName)
                 .collect(Collectors.toList());
-        assertThat(actualNames).isEqualTo(expectedNames);
+        assertThat(actualNames)
+                .withFailMessage("Event card names not equal to response api")
+                .isEqualTo(expectedNames);
     }
 
     @Step("Язык докладов совпадает с ответом из API")
@@ -93,7 +98,9 @@ public class VideoPageSteps extends BasePageSteps {
                 .stream()
                 .map(EventTalkCard::getEventLanguage)
                 .collect(Collectors.toList());
-        assertThat(actualLanguages).isEqualTo(expectedLanguages);
+        assertThat(actualLanguages)
+                .withFailMessage("Event card languages not equal to response api")
+                .isEqualTo(expectedLanguages);
     }
 
     @Step("Все доклады имеют 'Video' тег")
@@ -102,7 +109,9 @@ public class VideoPageSteps extends BasePageSteps {
                 .stream()
                 .map(EventTalkCard::getEventVideo)
                 .collect(Collectors.toList());
-        assertThat(actualVideos).containsOnly("Video");
+        assertThat(actualVideos)
+                .withFailMessage("Event cards do not have a video tag")
+                .containsOnly("Video");
     }
 
 }
