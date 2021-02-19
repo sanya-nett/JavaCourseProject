@@ -1,10 +1,10 @@
-package ru.ascherba.epam.events.ui.scenario;
+package ru.ascherba.epam.events.ui;
 
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.ascherba.epam.events.helpers.EventCardHelper;
+import ru.ascherba.epam.events.helpers.api.EventCardHelper;
 import ru.ascherba.epam.events.steps.EventPageSteps;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -33,7 +33,8 @@ public class TestUpcomingEvents extends BaseTest {
         eventSteps.userMoveToEventsTab();
         eventSteps.userClickOnUpcomingEvents();
         eventSteps.eventCardsPresentedOnPage();
-        assumeTrue(new EventCardHelper().haveThisWeekEvents());
+        assumeTrue(new EventCardHelper().haveThisWeekEvents(),
+                "There are no events for this week");
         eventSteps.weekEventDatesInCurrentWeekRange();
     }
 }

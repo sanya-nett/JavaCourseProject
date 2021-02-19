@@ -1,4 +1,4 @@
-package ru.ascherba.epam.events.helpers;
+package ru.ascherba.epam.events.helpers.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,6 +7,7 @@ import ru.ascherba.epam.events.entities.talks.EventTalkFilterCategory;
 import ru.ascherba.epam.events.entities.talks.EventTalkFilterItem;
 import ru.ascherba.epam.events.entities.talks.EventTalkResponse;
 import ru.ascherba.epam.events.entities.talks.EventTalkResponseCard;
+import ru.ascherba.epam.events.helpers.EventFilterItemsJsonDeserializer;
 
 import java.util.Arrays;
 import java.util.HashMap;

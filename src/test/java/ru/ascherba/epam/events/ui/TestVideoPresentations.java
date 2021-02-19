@@ -1,4 +1,4 @@
-package ru.ascherba.epam.events.ui.scenario;
+package ru.ascherba.epam.events.ui;
 
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.ascherba.epam.events.entities.EventFilterQueryParams;
 import ru.ascherba.epam.events.entities.talks.EventTalkResponseCard;
-import ru.ascherba.epam.events.helpers.EventCardTalkFilterHelper;
+import ru.ascherba.epam.events.helpers.api.EventCardTalkFilterHelper;
 import ru.ascherba.epam.events.steps.VideoPageSteps;
 
 import java.util.HashMap;
