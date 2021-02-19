@@ -6,6 +6,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import ru.ascherba.epam.events.helpers.config.ConfigHelper;
 
 /**
  * Created by aleksandr.scherba on 14.02.2021
@@ -18,8 +19,7 @@ public class EventBaseHelper {
                 new ResponseLoggingFilter(),
                 new AllureRestAssured()
         );
-        // FIXME: need use a common configuration class
-        RestAssured.baseURI = "https://events.epam.com";
+        RestAssured.baseURI = ConfigHelper.getHostname();
         RestAssured.responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType(ContentType.JSON)
